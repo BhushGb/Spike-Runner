@@ -2,7 +2,7 @@
 
 A fast-paced browser survival game. Jump over red spikes, collect green fuel, and invert gravity with yellow feeds. How long can you survive?
 
----
+
 
 ## How to Play
 
@@ -18,7 +18,7 @@ Survive as long as possible.
 - Touch yellow to invert gravity  
 - Score rises the longer you play
 
----
+
 
 ## Strength System
 
@@ -29,7 +29,7 @@ Survive as long as possible.
 | Green strength fuel                 | +1 strength         |
 | 1 more red collision at 0 strength  | **GAME OVER!**      |
 
----
+
 
 ## Controls
 
@@ -43,7 +43,7 @@ Survive as long as possible.
 | Enter                | Confirm / Continue  |
 | T (on Game Over)     | Change theme        |
 
----
+
 
 ## Key Objects
 
@@ -51,7 +51,7 @@ Survive as long as possible.
 - **Green Strength Fuel** – Restores +1 strength.
 - **Yellow Gravity Feed** – Inverts gravity and gives a short safe period.
 
----
+
 
 ## Tips
 
@@ -62,7 +62,7 @@ Survive as long as possible.
 
 **Jump → Avoid → Collect → Shift → Survive**
 
----
+
 
 ## Files
 
@@ -71,14 +71,14 @@ Survive as long as possible.
 | `Spike Runner.html`                  | The game (open in any browser)     |
 | `Spike_Runner_Quick_Start_Guide.pdf` | Printable quick-start pamphlet     |
 
----
+
 
 ## Requirements
 
 - Any modern browser (Chrome, Firefox, Edge, Safari)
 - No installation or dependencies required
 
----
+
 
 ## Credits
 
@@ -86,13 +86,12 @@ Survive as long as possible.
 
 This project was created as a personal educational exercise in game design, HTML5 canvas programming, and technical documentation.
 
----
+
 
 ## Notice
 
 Spike Runner, its artwork, were produced with the assistance of artificial intelligence as an educational exercise in game design and documentation. Any resemblance between this game's concept, visuals, or naming and any existing commercial product is coincidental and unintentional. This material isn't for commercial distribution and is intended solely for learning purposes.
 
----
 
 ## License
 

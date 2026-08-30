@@ -1,0 +1,1843 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Spike Runner</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+    user-select: none;
+}
+
+body {
+    background: #080b12;
+    color: #fff;
+}
+
+canvas {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+/* ================= COMMON ================= */
+
+.hidden {
+    display: none !important;
+}
+
+.screen {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    padding: 20px;
+}
+
+.title {
+    font-size: 52px;
+    font-weight: 900;
+    letter-spacing: 4px;
+    margin-bottom: 20px;
+    line-height: 1.05;
+}
+
+.title .spike {
+    color: #ff3333;
+}
+
+.title .runner {
+    color: #1683ff;
+}
+
+/* ================= TITLE ================= */
+
+.titleContinue {
+    font-size: 18px;
+    line-height: 1.4;
+}
+
+/* ================= RULES ================= */
+
+#rules {
+    background: #000;
+    cursor: pointer;
+}
+
+.rulesBox {
+    width: 700px;
+    padding: 20px 28px;
+    border: 2px solid #ddd;
+    border-radius: 16px;
+}
+
+.rule {
+    text-align: left;
+    font-size: 18px;
+    padding: 9px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.rule:last-child {
+    border-bottom: 0;
+}
+
+.rule b {
+    color: #146eff;
+}
+
+.continue {
+    margin-top: 25px;
+    color: #777;
+    font-size: 19px;
+    animation: blink 1.5s infinite;
+}
+
+@keyframes blink {
+    50% {
+        opacity: .3;
+    }
+}
+
+/* ================= THEME ================= */
+
+#themeScreen {
+    background: #050505;
+}
+
+.themeChoices {
+    display: flex;
+    gap: 25px;
+    margin: 30px 0;
+}
+
+.themeChoice {
+    width: 210px;
+    height: 140px;
+    border: 3px solid #555;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.themeChoice.selected {
+    border-color: #1683ff;
+    box-shadow: 0 0 25px rgba(22, 131, 255, .55);
+}
+
+.blackChoice {
+    background: #000;
+    color: #fff;
+}
+
+.whiteChoice {
+    background: #fff;
+    color: #111;
+}
+
+.themeName {
+    font-size: 28px;
+    font-weight: 900;
+}
+
+button {
+    border: 0;
+    border-radius: 9px;
+    padding: 13px 28px;
+    background: #2563eb;
+    color: #fff;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #3b82f6;
+}
+
+.secondary {
+    background: #4b5563;
+}
+
+/* ================= LOADING ================= */
+
+#loading {
+    background: #000;
+}
+
+.loadingTitle {
+    font-size: 44px;
+    font-weight: 900;
+    letter-spacing: 3px;
+}
+
+.loadingBar {
+    width: 500px;
+    height: 8px;
+    margin-top: 25px;
+    background: #222;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.loadingFill {
+    width: 0;
+    height: 100%;
+    background: #1683ff;
+}
+
+.tip {
+    width: 900px;
+    margin-top: 40px;
+    font-size: 30px;
+    font-weight: 900;
+}
+
+/* ================= GAME UI ================= */
+
+#ui {
+    position: fixed;
+    top: 14px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 20;
+    display: flex;
+    gap: 10px;
+    pointer-events: none;
+}
+
+.panel {
+    padding: 10px 16px;
+    background: rgba(0, 0, 0, .78);
+    border: 1px solid #444;
+    border-radius: 9px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+body.white .panel {
+    background: rgba(255, 255, 255, .9);
+    color: #111;
+    border-color: #aaa;
+}
+
+/* Hide only the upper game UI while title screen is visible */
+body.title-active #ui {
+    display: none;
+}
+
+#hint {
+    position: fixed;
+    bottom: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 20;
+    color: #999;
+    font-size: 17px;
+    pointer-events: none;
+    white-space: nowrap;
+}
+
+/* Hide game hint only on title screen */
+body.title-active #hint {
+    display: none;
+}
+
+/* ================= GRAVITY ================= */
+
+#gravityMessage {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 40;
+    opacity: 0;
+    pointer-events: none;
+    text-align: center;
+    transition: opacity .2s;
+}
+
+.gravityTitle {
+    font-size: 42px;
+    font-weight: 900;
+    letter-spacing: 3px;
+}
+
+.gravitySub {
+    margin-top: 8px;
+    color: #ffd21a;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+/* ================= FLASH ================= */
+
+#flash {
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    pointer-events: none;
+    background: rgba(80, 255, 100, .55);
+    opacity: 0;
+}
+
+#flash.on {
+    animation: greenFlash 1s ease-out;
+}
+
+@keyframes greenFlash {
+    0% {
+        opacity: .65;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+/* ================= PAUSE ================= */
+
+#pauseScreen {
+    position: fixed;
+    inset: 0;
+    z-index: 80;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background: rgba(0, 0, 0, .68);
+    pointer-events: none;
+}
+
+#pauseScreen h1 {
+    font-size: 52px;
+    margin: 0;
+}
+
+#pauseScreen p {
+    font-size: 20px;
+    color: #ccc;
+}
+
+/* ================= GAME OVER ================= */
+
+#gameOver {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, .86);
+}
+
+.gameOverBox {
+    width: 450px;
+    padding: 35px;
+    background: #111827;
+    border-radius: 18px;
+    text-align: center;
+}
+
+.gameOverBox h1 {
+    color: #ff3333;
+    font-size: 42px;
+}
+
+.finalScoreText {
+    font-size: 30px;
+}
+
+.gameOverHint {
+    color: #aaa;
+    font-size: 14px;
+}
+
+.highScoreResult {
+    min-height: 30px;
+    margin-top: 12px;
+    font-size: 21px;
+    font-weight: 800;
+    line-height: 1.35;
+}
+
+.highScoreResult.newRecord {
+    color: #ffd21a;
+}
+
+.highScoreResult.unbeaten {
+    color: #aaa;
+}
+
+.buttonRow {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 20px;
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="game"></canvas>
+
+<!-- ================= TITLE ================= -->
+
+<div id="titleScreen" class="screen">
+
+    <div class="title">
+        <span class="spike">SPIKE</span><br>
+        <span class="runner">RUNNER</span>
+    </div>
+
+    <div id="titleContinue" class="titleContinue hidden">
+        A fast reflex-based, gravity-shifting game
+        <br><br><br><i>Defy the speed...<br/>Shift the gravity...<br/>Jump over the spikes...</i><br><br>
+        PRESS ENTER OR CLICK TO START.
+    </div>
+
+</div>
+
+<!-- ================= RULES ================= -->
+
+<div id="rules" class="screen hidden">
+
+    <div class="title">
+        <span class="spike">SPIKE</span><br>
+        <span class="runner">RUNNER</span>
+    </div>
+
+    <div class="rulesBox">
+
+        <div class="rule">
+            <b>SPACE / CLICK</b> — Jump
+        </div>
+
+        <div class="rule">
+            <b>B</b> — Slow down
+        </div>
+
+        <div class="rule">
+            <b>N</b> — Speed up
+        </div>
+
+        <div class="rule">
+            <b>P</b> — Pause / Resume
+        </div>
+
+        <div class="rule">
+            RED SPIKES — Avoid!
+        </div>
+
+        <div class="rule">
+            YELLOW SQUARE — Inverts screen and gives a little SAFE break.
+        </div>
+
+        <div class="rule">
+            GREEN CIRCLE — Boosts strength
+        </div>
+
+        <div class="rule">
+            HIGH SCORE — Your best score is saved for this browser session.
+        </div>
+
+    </div>
+
+    <div class="continue">
+        PRESS ENTER / CLICK TO START GAME
+    </div>
+
+</div>
+
+<!-- ================= THEME ================= -->
+
+<div id="themeScreen" class="screen hidden">
+
+    <div class="title">
+        SELECT THEME
+    </div>
+
+    <div>
+        PRESS LEFT / RIGHT ARROW KEY TO SELECT •
+        PRESS ENTER / CLICK TO CONFIRM
+    </div>
+
+    <div class="themeChoices">
+
+        <div id="blackChoice" class="themeChoice blackChoice selected">
+            <div class="themeName">BLACK</div>
+            <small>Dark background</small>
+        </div>
+
+        <div id="whiteChoice" class="themeChoice whiteChoice">
+            <div class="themeName">WHITE</div>
+            <small>White background</small>
+        </div>
+
+    </div>
+
+    <button id="themeButton">CONTINUE</button>
+
+</div>
+
+<!-- ================= LOADING ================= -->
+
+<div id="loading" class="screen hidden">
+
+    <div class="loadingTitle">LOADING GAME</div>
+
+    <div class="loadingBar">
+        <div id="loadingFill" class="loadingFill"></div>
+    </div>
+
+    <div id="tip" class="tip"></div>
+
+</div>
+
+<!-- ================= GAME UI ================= -->
+
+<div id="ui">
+
+    <div class="panel">
+        HIGH SCORE:
+        <span id="highScore">0</span>
+    </div>
+
+    <div class="panel">
+        CURRENT SCORE:
+        <span id="score">0</span>
+    </div>
+
+    <div class="panel">
+        SIDE:
+        <span id="side">BOTTOM</span>
+    </div>
+
+    <div class="panel">
+        STRENGTH:
+        <span id="strength">1</span>
+    </div>
+
+</div>
+
+<div id="gravityMessage"></div>
+
+<div id="pauseScreen">
+    <h1>PAUSED</h1>
+    <p>PRESS P TO RESUME</p>
+</div>
+
+<div id="flash"></div>
+
+<div id="hint">
+    SPACE / Click = JUMP
+    &nbsp; • &nbsp;
+    B = SLOW
+    &nbsp; • &nbsp;
+    N = SPEED
+    &nbsp; • &nbsp;
+    P = PAUSE
+</div>
+
+<!-- ================= GAME OVER ================= -->
+
+<div id="gameOver">
+
+    <div class="gameOverBox">
+
+        <h1>GAME OVER</h1>
+
+        <p class="finalScoreText">
+            Your score is:
+            <strong id="finalScore">0</strong>
+        </p>
+
+        <div id="highScoreResult" class="highScoreResult"></div>
+
+        <div class="buttonRow">
+            <button id="restart">RESTART</button>
+
+            <button id="changeTheme" class="secondary">
+                CHANGE THEME
+            </button>
+        </div>
+
+        <p class="gameOverHint">
+            ENTER / SPACE = Restart
+            <br>
+            T = Change Theme
+        </p>
+
+    </div>
+
+</div>
+
+<script>
+"use strict";
+
+/* ================= CANVAS ================= */
+
+const canvas = document.getElementById("game");
+const ctx = canvas.getContext("2d");
+
+let W = innerWidth;
+let H = innerHeight;
+
+function resize() {
+    W = innerWidth;
+    H = innerHeight;
+
+    canvas.width = W;
+    canvas.height = H;
+}
+
+addEventListener("resize", resize);
+resize();
+
+/* ================= DOM ================= */
+
+const titleScreen = document.getElementById("titleScreen");
+const titleContinue = document.getElementById("titleContinue");
+const rules = document.getElementById("rules");
+const themeScreen = document.getElementById("themeScreen");
+const loading = document.getElementById("loading");
+
+const blackChoice = document.getElementById("blackChoice");
+const whiteChoice = document.getElementById("whiteChoice");
+const themeButton = document.getElementById("themeButton");
+
+const loadingFill = document.getElementById("loadingFill");
+const tip = document.getElementById("tip");
+
+const scoreEl = document.getElementById("score");
+const highScoreEl = document.getElementById("highScore");
+const highScoreResult = document.getElementById("highScoreResult");
+const sideEl = document.getElementById("side");
+const strengthEl = document.getElementById("strength");
+
+const gravityMessage = document.getElementById("gravityMessage");
+const flash = document.getElementById("flash");
+const pauseScreen = document.getElementById("pauseScreen");
+
+const gameOver = document.getElementById("gameOver");
+const finalScore = document.getElementById("finalScore");
+const restart = document.getElementById("restart");
+const changeTheme = document.getElementById("changeTheme");
+
+/* ================= THEME ================= */
+
+let theme = "black";
+
+function setTheme(value) {
+    theme = value;
+
+    blackChoice.classList.toggle("selected", theme === "black");
+    whiteChoice.classList.toggle("selected", theme === "white");
+
+    document.body.classList.toggle("white", theme === "white");
+}
+
+/* ================= SCREEN FLOW ================= */
+
+function setTitleActive(active) {
+    document.body.classList.toggle("title-active", active);
+}
+
+function showRules() {
+    setTitleActive(false);
+
+    titleScreen.classList.add("hidden");
+    rules.classList.remove("hidden");
+}
+
+function showTheme() {
+    setTitleActive(false);
+
+    titleScreen.classList.add("hidden");
+    rules.classList.add("hidden");
+    loading.classList.add("hidden");
+    themeScreen.classList.remove("hidden");
+}
+
+function showLoading() {
+    setTitleActive(false);
+
+    titleScreen.classList.add("hidden");
+    rules.classList.add("hidden");
+    themeScreen.classList.add("hidden");
+    loading.classList.remove("hidden");
+
+    loadingFill.style.width = "0%";
+
+    tip.textContent =
+        tips[Math.floor(Math.random() * tips.length)];
+
+    let progress = 0;
+
+    const timer = setInterval(() => {
+        progress += 5;
+        loadingFill.style.width = progress + "%";
+
+        if (progress >= 100) {
+            clearInterval(timer);
+            setTimeout(startGame, 250);
+        }
+    }, 50);
+}
+
+/* ================= TIPS ================= */
+
+const tips = [
+    "Jump early when a tall spike approaches.",
+    "Hold B to slow the game down.",
+    "Press N to increase game speed.",
+    "Press P to pause at any time.",
+    "Yellow squares invert the screen.",
+    "Green circles restore strength.",
+    "One spike hit removes one strength.",
+    "The game gets faster as you progress."
+];
+
+/* ================= GAME CONSTANTS ================= */
+
+const PLAYER_SIZE = 32;
+const GRAVITY = 1750;
+const JUMP_POWER = 730;
+const START_SPEED = 180;
+const MAX_SPEED = 800;
+
+const BOTTOM_LINE = 105;
+const TOP_LINE = 105;
+
+const MIN_SPIKE = 25;
+const MAX_SPIKE = 66;
+
+const OBJECT_GAP = 190;
+const YELLOW_COOLDOWN = 12;
+
+/* ================= GAME STATE ================= */
+
+let player = null;
+let objects = [];
+
+let strength = 1;
+let score = 0;
+
+const HIGH_SCORE_KEY = "spikeShiftHighScore";
+
+let sessionStore = null;
+
+try {
+    sessionStore = window.sessionStorage;
+} catch {
+    sessionStore = null;
+}
+
+function loadHighScore() {
+    try {
+        return sessionStore
+            ? Number(sessionStore.getItem(HIGH_SCORE_KEY) || 0)
+            : 0;
+    } catch {
+        return 0;
+    }
+}
+
+let highScore = loadHighScore();
+
+let gravitySide = "bottom";
+let speed = START_SPEED;
+
+let spawnTimer = .7;
+let safeTimer = 0;
+let yellowCooldown = 0;
+
+let running = false;
+let paused = false;
+let slow = false;
+let fast = false;
+
+let redCount = 0;
+let damageTimer = 0;
+let shakeTimer = 0;
+let gravityTimer = 0;
+
+/* ================= POSITIONS ================= */
+
+function bottomY() {
+    return H - BOTTOM_LINE - PLAYER_SIZE;
+}
+
+function topY() {
+    return TOP_LINE;
+}
+
+/* ================= HIGH SCORE ================= */
+
+function saveHighScore() {
+    try {
+        if (sessionStore) {
+            sessionStore.setItem(
+                HIGH_SCORE_KEY,
+                String(Math.floor(highScore))
+            );
+        }
+    } catch {}
+}
+
+function updateHighScoreIfNeeded() {
+    const current = Math.floor(score);
+
+    if (current > highScore) {
+        highScore = current;
+        saveHighScore();
+        return true;
+    }
+
+    return false;
+}
+
+/* ================= RESET ================= */
+
+function resetGame() {
+    score = 0;
+    strength = 3;
+
+    gravitySide = "bottom";
+    speed = START_SPEED;
+
+    spawnTimer = .7;
+    safeTimer = 0;
+    yellowCooldown = 0;
+
+    redCount = 0;
+    damageTimer = 0;
+    shakeTimer = 0;
+    gravityTimer = 0;
+
+    objects = [];
+    paused = false;
+
+    player = {
+        x: 120,
+        y: bottomY(),
+        vy: 0,
+        jumping: false,
+        angle: 0,
+        fromAngle: 0,
+        toAngle: 0,
+        rotationTime: 0,
+        rotating: false,
+        damaged: false
+    };
+
+    pauseScreen.style.display = "none";
+    gravityMessage.style.opacity = "0";
+
+    updateUI();
+}
+
+/* ================= START ================= */
+
+function startGame() {
+    loading.classList.add("hidden");
+    themeScreen.classList.add("hidden");
+    rules.classList.add("hidden");
+    gameOver.style.display = "none";
+
+    resetGame();
+    running = true;
+}
+
+/* ================= GAME OVER ================= */
+
+function endGame() {
+    running = false;
+    paused = false;
+
+    pauseScreen.style.display = "none";
+
+    const final = Math.floor(score);
+    const newRecord = updateHighScoreIfNeeded();
+
+    finalScore.textContent = final;
+    highScoreResult.className = "highScoreResult";
+
+    if (newRecord) {
+        highScoreResult.classList.add("newRecord");
+        highScoreResult.innerHTML =
+            "Congratulations! <br> You achieved a new high score.<br><br>" +
+            "New high score: <strong>" + highScore + "</strong>";
+    } else {
+        highScoreResult.classList.add("unbeaten");
+        highScoreResult.innerHTML =
+            "High score: <strong>" + highScore + "</strong><br><br>" +
+            "Do you want to try again?";
+    }
+
+    updateUI();
+
+    gameOver.style.display = "flex";
+    gameOver.style.opacity = "0";
+
+    setTimeout(() => {
+        gameOver.style.transition = "opacity .8s";
+        gameOver.style.opacity = "1";
+    }, 50);
+}
+
+/* ================= PAUSE ================= */
+
+function togglePause() {
+    if (!running) return;
+
+    paused = !paused;
+
+    pauseScreen.style.display =
+        paused ? "flex" : "none";
+}
+
+/* ================= JUMP ================= */
+
+function jump() {
+    if (!running || paused || player.jumping) return;
+
+    player.jumping = true;
+
+    player.vy =
+        gravitySide === "bottom"
+            ? -JUMP_POWER
+            : JUMP_POWER;
+
+    startRotation();
+}
+
+/* ================= ROTATION ================= */
+
+function startRotation() {
+    player.fromAngle = player.angle;
+
+    player.toAngle =
+        player.angle +
+        (gravitySide === "bottom"
+            ? Math.PI / 2
+            : -Math.PI / 2);
+
+    player.rotationTime = 0;
+    player.rotating = true;
+}
+
+function updateRotation(dt) {
+    if (!player.rotating) return;
+
+    player.rotationTime += dt;
+
+    const duration = .42;
+
+    let t = Math.min(
+        1,
+        player.rotationTime / duration
+    );
+
+    t =
+        t < .5
+            ? 4 * t * t * t
+            : 1 - Math.pow(-2 * t + 2, 3) / 2;
+
+    player.angle =
+        player.fromAngle +
+        (player.toAngle - player.fromAngle) * t;
+
+    if (player.rotationTime >= duration) {
+        player.angle = player.toAngle;
+        player.rotating = false;
+    }
+}
+
+/* ================= PLAYER PHYSICS ================= */
+
+function updatePlayer(dt) {
+    player.vy +=
+        (gravitySide === "bottom"
+            ? GRAVITY
+            : -GRAVITY) * dt;
+
+    player.y += player.vy * dt;
+
+    updateRotation(dt);
+
+    if (
+        gravitySide === "bottom" &&
+        player.y >= bottomY()
+    ) {
+        player.y = bottomY();
+        player.vy = 0;
+        player.jumping = false;
+        player.rotating = false;
+        player.angle = 0;
+    }
+
+    if (
+        gravitySide === "top" &&
+        player.y <= topY()
+    ) {
+        player.y = topY();
+        player.vy = 0;
+        player.jumping = false;
+        player.rotating = false;
+        player.angle = 0;
+    }
+}
+
+/* ================= COLLISION ================= */
+
+function playerBox() {
+    return {
+        x: player.x + 4,
+        y: player.y + 4,
+        width: PLAYER_SIZE - 8,
+        height: PLAYER_SIZE - 8
+    };
+}
+
+function collision(a, b) {
+    return (
+        a.x < b.x + b.size &&
+        a.x + a.width > b.x &&
+        a.y < b.y + b.size &&
+        a.y + a.height > b.y
+    );
+}
+
+/* ================= OBJECT POSITION ================= */
+
+function nextX() {
+    let x = W + 50;
+
+    if (objects.length) {
+        const last = objects[objects.length - 1];
+
+        x = Math.max(
+            x,
+            last.x + last.size + OBJECT_GAP
+        );
+    }
+
+    return x;
+}
+
+function objectY(o) {
+    return gravitySide === "bottom"
+        ? H - BOTTOM_LINE - o.size
+        : TOP_LINE;
+}
+
+/* ================= RED SPIKE ================= */
+
+function addRed() {
+    let size;
+    const r = Math.random();
+
+    if (r < .25) {
+        size = 50 + Math.random() * 16;
+    } else if (r < .65) {
+        size = 36 + Math.random() * 14;
+    } else {
+        size = MIN_SPIKE + Math.random() * 14;
+    }
+
+    size = Math.min(size, MAX_SPIKE);
+
+    const x = nextX();
+
+    objects.push({
+        type: "red",
+        x,
+        size,
+        dead: false,
+        death: .25
+    });
+
+    redCount++;
+
+    if (
+        redCount % 8 === 0 &&
+        yellowCooldown <= 0
+    ) {
+        objects.push({
+            type: "yellow",
+            x: x + size + 350,
+            size: 38,
+            dead: false,
+            death: .25
+        });
+
+        yellowCooldown = YELLOW_COOLDOWN;
+    }
+}
+
+/* ================= GREEN ================= */
+
+function addGreen() {
+    const radius = 15;
+
+    objects.push({
+        type: "green",
+        x: nextX() + 150,
+        size: radius * 2,
+        radius,
+        dead: false,
+        death: .25
+    });
+}
+
+/* ================= GRAVITY ================= */
+
+function invertGravity() {
+    gravitySide =
+        gravitySide === "bottom"
+            ? "top"
+            : "bottom";
+
+    objects = objects.filter(
+        o => o.type !== "red"
+    );
+
+    safeTimer = 3;
+    spawnTimer = 3;
+    yellowCooldown = YELLOW_COOLDOWN;
+
+    player.vy = 0;
+    player.jumping = true;
+
+    player.y = Math.max(
+        topY() + 60,
+        Math.min(
+            player.y,
+            bottomY() - 60
+        )
+    );
+
+    startRotation();
+
+    gravityTimer = 2.2;
+    gravityMessage.style.opacity = "1";
+}
+
+/* ================= GREEN COLLECTION ================= */
+
+function collectGreen() {
+    strength = Math.min(3, strength + 1);
+
+    flash.classList.remove("on");
+    void flash.offsetWidth;
+    flash.classList.add("on");
+
+    updateUI();
+}
+
+/* ================= GAME UPDATE ================= */
+
+function update(dt) {
+    if (!running || paused) return;
+
+    let multiplier = 1;
+
+    if (slow) multiplier = .45;
+    if (fast) multiplier = 1.6;
+
+    const t = dt * multiplier;
+
+    damageTimer = Math.max(0, damageTimer - t);
+    shakeTimer = Math.max(0, shakeTimer - t);
+    gravityTimer = Math.max(0, gravityTimer - t);
+    yellowCooldown = Math.max(0, yellowCooldown - t);
+
+    if (gravityTimer > 0) {
+        if (gravityTimer < .45) {
+            gravityMessage.style.opacity =
+                gravityTimer / .45;
+        }
+    } else {
+        gravityMessage.style.opacity = "0";
+    }
+
+    if (safeTimer > 0) {
+        safeTimer -= t;
+        spawnTimer = 3;
+
+        if (safeTimer <= 0) {
+            safeTimer = 0;
+            spawnTimer = .65;
+        }
+    }
+
+    updatePlayer(t);
+
+    score += speed * t / 10;
+
+    speed = Math.min(
+        MAX_SPEED,
+        START_SPEED +
+        Math.floor(score / 50) * 20
+    );
+
+    if (safeTimer <= 0) {
+        spawnTimer -= t;
+
+        if (spawnTimer <= 0) {
+            addRed();
+
+            if (
+                Math.random() < .15 &&
+                objects.length < 6
+            ) {
+                addGreen();
+            }
+
+            const factor = Math.min(
+                1.7,
+                speed / START_SPEED
+            );
+
+            spawnTimer = Math.max(
+                .5,
+                (.9 + Math.random() * .35) / factor
+            );
+        }
+    }
+
+    const p = playerBox();
+
+    for (
+        let i = objects.length - 1;
+        i >= 0;
+        i--
+    ) {
+        const o = objects[i];
+
+        if (!o.dead) {
+            o.x -= speed * t;
+        }
+
+        const box = {
+            x: o.x,
+            y: objectY(o),
+            size: o.size
+        };
+
+        if (
+            !o.dead &&
+            collision(p, box)
+        ) {
+            o.dead = true;
+            o.death = .25;
+
+            if (o.type === "red") {
+
+                if (strength === 0) {
+                    endGame();
+                    return;
+                }
+
+                strength = Math.max(
+                    0,
+                    strength - 1
+                );
+
+                damageTimer = .45;
+                shakeTimer = .25;
+
+                player.vy =
+                    gravitySide === "bottom"
+                        ? -190
+                        : 190;
+
+                if (strength === 0) {
+                    player.damaged = true;
+                }
+
+            } else if (o.type === "yellow") {
+                invertGravity();
+
+            } else if (o.type === "green") {
+                collectGreen();
+            }
+        }
+
+        if (o.dead) {
+            o.death -= t;
+
+            if (o.death <= 0) {
+                objects.splice(i, 1);
+                continue;
+            }
+        }
+
+        if (o.x + o.size < -80) {
+            objects.splice(i, 1);
+        }
+    }
+
+    updateUI();
+}
+
+/* ================= UI ================= */
+
+function updateUI() {
+    scoreEl.textContent = Math.floor(score);
+    highScoreEl.textContent = Math.floor(highScore);
+
+    sideEl.textContent =
+        gravitySide.toUpperCase();
+
+    strengthEl.textContent = strength;
+
+    strengthEl.style.color =
+        strength === 0 ? "white" : "";
+}
+
+/* ================= ARENA ================= */
+
+function drawArena() {
+    if (gravitySide === "bottom") {
+
+        ctx.fillStyle =
+            "rgba(0,180,255,.035)";
+
+        ctx.fillRect(
+            0,
+            H - BOTTOM_LINE,
+            W,
+            55
+        );
+
+        ctx.fillStyle = "#16d9ff";
+
+        ctx.fillRect(
+            0,
+            H - BOTTOM_LINE,
+            W,
+            3
+        );
+
+    } else {
+
+        ctx.fillStyle =
+            "rgba(0,180,255,.035)";
+
+        ctx.fillRect(
+            0,
+            50,
+            W,
+            55
+        );
+
+        ctx.fillStyle = "#16d9ff";
+
+        ctx.fillRect(
+            0,
+            TOP_LINE,
+            W,
+            3
+        );
+    }
+}
+
+/* ================= PLAYER ================= */
+
+function drawPlayer() {
+    const shake =
+        shakeTimer > 0
+            ? (Math.random() - .5) * 6
+            : 0;
+
+    ctx.save();
+
+    ctx.translate(
+        player.x +
+        PLAYER_SIZE / 2 +
+        shake,
+
+        player.y +
+        PLAYER_SIZE / 2 +
+        shake
+    );
+
+    ctx.rotate(player.angle);
+
+    ctx.fillStyle = "#1683ff";
+
+    ctx.fillRect(
+        -PLAYER_SIZE / 2,
+        -PLAYER_SIZE / 2,
+        PLAYER_SIZE,
+        PLAYER_SIZE
+    );
+
+    if (damageTimer > 0) {
+        ctx.strokeStyle = "#ff3333";
+        ctx.lineWidth = 4;
+
+        ctx.strokeRect(
+            -PLAYER_SIZE / 2 - 3,
+            -PLAYER_SIZE / 2 - 3,
+            PLAYER_SIZE + 6,
+            PLAYER_SIZE + 6
+        );
+    }
+
+    if (strength === 0) {
+        ctx.strokeStyle = "#fff";
+        ctx.lineWidth = 4;
+        ctx.lineCap = "round";
+
+        ctx.beginPath();
+
+        ctx.moveTo(-9, -9);
+        ctx.lineTo(9, 9);
+
+        ctx.moveTo(9, -9);
+        ctx.lineTo(-9, 9);
+
+        ctx.stroke();
+    }
+
+    ctx.restore();
+}
+
+/* ================= RED SPIKE ================= */
+
+function drawRed(o) {
+    let scale = 1;
+
+    if (o.dead) {
+        scale = Math.max(
+            0,
+            o.death / .25
+        );
+    }
+
+    const size = o.size * scale;
+
+    const base =
+        gravitySide === "bottom"
+            ? H - BOTTOM_LINE
+            : TOP_LINE;
+
+    ctx.fillStyle =
+        o.dead &&
+        Math.floor(o.death * 40) % 2 === 0
+            ? "white"
+            : "#ff3333";
+
+    ctx.beginPath();
+
+    if (gravitySide === "bottom") {
+        ctx.moveTo(o.x, base);
+
+        ctx.lineTo(
+            o.x + o.size / 2,
+            base - size
+        );
+
+        ctx.lineTo(
+            o.x + o.size,
+            base
+        );
+
+    } else {
+        ctx.moveTo(o.x, base);
+
+        ctx.lineTo(
+            o.x + o.size / 2,
+            base + size
+        );
+
+        ctx.lineTo(
+            o.x + o.size,
+            base
+        );
+    }
+
+    ctx.closePath();
+    ctx.fill();
+}
+
+/* ================= YELLOW ================= */
+
+function drawYellow(o) {
+    let scale = 1;
+
+    if (o.dead) {
+        scale = Math.max(
+            0,
+            o.death / .25
+        );
+    }
+
+    const size = o.size * scale;
+
+    const cx = o.x + o.size / 2;
+    const cy = objectY(o) + o.size / 2;
+
+    ctx.fillStyle =
+        o.dead &&
+        Math.floor(o.death * 40) % 2 === 0
+            ? "white"
+            : "#ffd21a";
+
+    ctx.fillRect(
+        cx - size / 2,
+        cy - size / 2,
+        size,
+        size
+    );
+}
+
+/* ================= GREEN ================= */
+
+function drawGreen(o) {
+    let scale = 1;
+
+    if (o.dead) {
+        scale = Math.max(
+            0,
+            o.death / .25
+        );
+    }
+
+    const r = o.radius * scale;
+
+    const cx = o.x + o.radius;
+    const cy = objectY(o) + o.radius;
+
+    ctx.fillStyle = "#29df5b";
+
+    ctx.beginPath();
+
+    ctx.arc(
+        cx,
+        cy,
+        r,
+        0,
+        Math.PI * 2
+    );
+
+    ctx.fill();
+
+    if (!o.dead) {
+        ctx.fillStyle = "#063d15";
+        ctx.font = "bold 19px Arial";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+
+        ctx.fillText("+", cx, cy);
+    }
+}
+
+/* ================= DRAW ================= */
+
+function draw() {
+    ctx.fillStyle =
+        theme === "white"
+            ? "#f5f5f5"
+            : "#080b12";
+
+    ctx.fillRect(
+        0,
+        0,
+        W,
+        H
+    );
+
+    drawArena();
+
+    for (const o of objects) {
+
+        if (o.type === "red") {
+            drawRed(o);
+
+        } else if (o.type === "yellow") {
+            drawYellow(o);
+
+        } else {
+            drawGreen(o);
+        }
+    }
+
+    if (player) {
+        drawPlayer();
+    }
+}
+
+/* ================= KEYBOARD ================= */
+
+document.addEventListener("keydown", e => {
+
+    /* TITLE */
+
+    if (!titleScreen.classList.contains("hidden")) {
+
+        if (e.code === "Enter") {
+            e.preventDefault();
+            showRules();
+        }
+
+        return;
+    }
+
+    /* RULES */
+
+    if (!rules.classList.contains("hidden")) {
+
+        if (
+            e.code === "Enter" ||
+            e.code === "Space"
+        ) {
+            e.preventDefault();
+            showTheme();
+        }
+
+        return;
+    }
+
+    /* THEME */
+
+    if (!themeScreen.classList.contains("hidden")) {
+
+        if (e.code === "ArrowLeft") {
+            e.preventDefault();
+            setTheme("black");
+            return;
+        }
+
+        if (e.code === "ArrowRight") {
+            e.preventDefault();
+            setTheme("white");
+            return;
+        }
+
+        if (
+            e.code === "Enter" ||
+            e.code === "Space"
+        ) {
+            e.preventDefault();
+            showLoading();
+            return;
+        }
+
+        return;
+    }
+
+    /* GAME OVER */
+
+    if (gameOver.style.display === "flex") {
+
+        if (
+            e.code === "Enter" ||
+            e.code === "Space"
+        ) {
+            e.preventDefault();
+
+            gameOver.style.display = "none";
+
+            resetGame();
+            running = true;
+
+            return;
+        }
+
+        if (e.code === "KeyT") {
+            e.preventDefault();
+
+            gameOver.style.display = "none";
+            running = false;
+
+            showTheme();
+
+            return;
+        }
+
+        return;
+    }
+
+    /* PAUSE */
+
+    if (e.code === "KeyP") {
+        e.preventDefault();
+
+        if (!e.repeat) {
+            togglePause();
+        }
+
+        return;
+    }
+
+    if (paused) return;
+
+    /* JUMP */
+
+    if (e.code === "Space") {
+        e.preventDefault();
+
+        if (!e.repeat) {
+            jump();
+        }
+
+        return;
+    }
+
+    /* SLOW */
+
+    if (e.code === "KeyB") {
+        e.preventDefault();
+        slow = true;
+        return;
+    }
+
+    /* SPEED */
+
+    if (e.code === "KeyN") {
+        e.preventDefault();
+        fast = true;
+    }
+});
+
+/* ================= KEY RELEASE ================= */
+
+document.addEventListener("keyup", e => {
+
+    if (e.code === "KeyB") {
+        slow = false;
+    }
+
+    if (e.code === "KeyN") {
+        fast = false;
+    }
+});
+
+/* ================= MOUSE INPUT ================= */
+
+canvas.addEventListener("click", () => {
+
+    if (running && !paused) {
+        jump();
+    }
+});
+
+titleScreen.addEventListener("click", () => {
+    showRules();
+});
+
+rules.addEventListener("click", () => {
+    showTheme();
+});
+
+blackChoice.addEventListener("click", () => {
+    setTheme("black");
+});
+
+whiteChoice.addEventListener("click", () => {
+    setTheme("white");
+});
+
+themeButton.addEventListener("click", () => {
+    showLoading();
+});
+
+restart.addEventListener("click", () => {
+
+    gameOver.style.display = "none";
+
+    resetGame();
+    running = true;
+});
+
+changeTheme.addEventListener("click", () => {
+
+    gameOver.style.display = "none";
+    running = false;
+
+    showTheme();
+});
+
+/* ================= TITLE TIMER ================= */
+
+let titleTimer;
+
+function startTitleTimer() {
+    clearTimeout(titleTimer);
+
+    titleContinue.classList.add("hidden");
+
+    titleTimer = setTimeout(() => {
+
+        if (!titleScreen.classList.contains("hidden")) {
+            titleContinue.classList.remove("hidden");
+        }
+
+    }, 1500);
+}
+
+/* ================= GAME LOOP ================= */
+
+let lastTime = performance.now();
+
+function loop(now) {
+
+    let dt =
+        (now - lastTime) / 1000;
+
+    lastTime = now;
+
+    dt = Math.min(dt, .05);
+
+    update(dt);
+    draw();
+
+    requestAnimationFrame(loop);
+}
+
+/* ================= INITIALIZE ================= */
+
+setTheme("black");
+resetGame();
+
+running = false;
+
+titleScreen.classList.remove("hidden");
+rules.classList.add("hidden");
+themeScreen.classList.add("hidden");
+loading.classList.add("hidden");
+
+gameOver.style.display = "none";
+
+setTitleActive(true);
+startTitleTimer();
+
+requestAnimationFrame(loop);
+</script>
+
+</body>
+</html>
