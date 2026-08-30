@@ -6,7 +6,7 @@ A fast-paced browser survival game. Jump over red spikes, collect green fuel, an
 
 ## How to Play
 
-1. Open `Spike Runner.html` https://bhushgb.github.io/?https://github.com/BhushGb/Spike-Runner/blob/main/Spike Runner.html in any modern browser.
+1. Open `Spike Runner.html` https://bhushgb.github.io/?https://github.com/BhushGb/Spike-Runner/blob/main/Spike-Runner.html in any modern browser.
 2. Press **Enter** or click to open the theme selector.
 3. Choose **black** or **white** theme.
 4. Jump and survive as long as you can.
