@@ -1,4 +1,4 @@
-# Spike Runner Player's Guide – Learning & Demonstration Project
+# Spike Runner Player's Guide
 
 This repository is a **learning and demonstration project** focused on applying the Microsoft Writing Style Guide to technical and user documentation.
 
