@@ -68,7 +68,7 @@ Survive as long as possible.
 
 | File                                 | Description                        |
 |--------------------------------------|------------------------------------|
-| `Spike Runner.html`                  | The game (open in any browser)     |
+| `Spike-Runner.html`                  | The game (open in any browser)     |
 | `Spike_Runner_Quick_Start_Guide.pdf` | Printable quick-start pamphlet     |
 
 
