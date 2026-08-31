@@ -90,7 +90,7 @@ This project was created as a personal educational exercise in game design, HTML
 
 ## Notice
 
-Spike Runner, its artwork, were produced with the assistance of artificial intelligence as an educational exercise in game design and documentation. Any resemblance between this game's concept, visuals, or naming and any existing commercial product is coincidental and unintentional. This material isn't for commercial distribution and is intended solely for learning purposes.
+Spike Runner, its artwork and quick user guide, were produced with the assistance of artificial intelligence as an educational exercise in game design and documentation. Any resemblance between this game's concept, visuals, or naming and any existing commercial product is coincidental and unintentional. This material isn't for commercial distribution and is intended solely for learning purposes.
 
 
 ## License
