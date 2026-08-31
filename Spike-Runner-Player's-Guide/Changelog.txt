@@ -1,0 +1,634 @@
+SPIKE RUNNER PLAYER GUIDE
+CHANGE LOG: from Casual Guide to MS Style Compliant Guide 
+
+1. CLARITY
+----------------------------------------------------------------------
+- Moved the Game Over consequence earlier in section 5.05: instead of
+  ending the icon row with a passive aside ("The collided spike is
+  destroyed."), the compliant version immediately tells the reader the
+  outcome that matters most: "If square's strength is 0, then one red
+  spike collision will result in Game Over." This puts the most
+  important information first, right after the visual that illustrates
+  it.
+- Changed the vague heading "What Happens When You Collect It?" to
+  "When You Collect Yellow Gravity Feed:" so the subject is explicit
+  instead of relying on the reader to infer what "It" refers to.
+- Changed "Strength 0 (X appears)" to "Strength = 0" (a precise,
+  unambiguous mathematical statement instead of a parenthetical aside).
+
+2. CONCISENESS
+----------------------------------------------------------------------
+- Combined the three separate sentences under "1. Introduction" into
+  one paragraph.
+- Removed the redundant Getting Started step "You can also drag and
+  drop the Spike Runner.html file directly into an open browser
+  window."
+- Removed the redundant sentence "You can use mouse click or Enter to
+  proceed further" from section 3.02 (repeats information already
+  given).
+- Shortened the Green Strength Fuel description from three sentences
+  ("...black '+' symbol. It is intentionally larger than a tiny pickup
+  but remains small enough to be a jumpable gameplay object. It is not
+  a spike.") to one: "The green object is a medium-sized green circle
+  with a black plus symbol."
+- Changed "Every red spike collision removes exactly 1 Strength:" to
+  "Every red spike collision removes 1 strength." (dropped the
+  unnecessary qualifier "exactly").
+- Removed the duplicate "Damaged player (0 Strength)" image, which
+  repeated a visual already shown in the Strength Collision icon row.
+- Removed one of two redundant instances of "OFFICIAL PLAYER GUIDE" on
+  the cover page (the casual guide repeats it once under the title and
+  again near the bottom).
+- Shortened heading "5.07 Scoring and High Score" to "5.07 High Score."
+
+3. ACCURACY
+----------------------------------------------------------------------
+- No factual errors found in either version; both describe the same
+  game rules (Strength starts and caps at 3, gravity states, control
+  keys). No changes were needed under this category beyond the
+  terminology fixes captured under Consistency.
+- Confirmed the Controls table and the Quick Reference table describe
+  the same key bindings in both versions—no discrepancies introduced
+  by editing.
+
+4. CONSISTENCY
+----------------------------------------------------------------------
+- Changed inconsistent internal capitalization of the official term
+  "Strength Fuel"—for example "Collect green Strength fuel" and
+  "Green Strength fuel" in the casual guide—to a single consistent
+  form, "Green Strength Fuel," used the same way in headings, bullets,
+  and captions.
+- Changed "Strength" to lowercase "strength" everywhere it's used as a
+  common noun (not the two-word term "Strength Fuel" and not at the
+  start of a sentence), for example "Maintain your Strength" to
+  "Maintain your strength," and "-1 Strength" / "+1 Strength" to
+  "-1 strength" / "+1 strength" in the Quick Reference table.
+- Changed Title Case table values that are generic descriptions, not
+  proper names—"Red Spike," "Red Spike Collision," "Yellow Square,"
+  "Green Circle," "Fatal Collision," "Red Hazard"—to sentence case:
+  "Red spike," "Red spike collision," "Yellow square," "Green circle,"
+  "Fatal collision," "Red hazard." At the same time, true proper names
+  in the same table—"Gravity Feed" and "Strength Fuel"—were correctly
+  left capitalized, showing a deliberate, consistent line between
+  generic terms and official object names.
+- Standardized "Theme Selection" capitalization (the casual guide
+  mixes "Theme Selection screen" and "Theme selection" for the same
+  screen).
+- Standardized heading capitalization scheme across the whole document
+  (see Capitalization, below) so every heading and subheading follows
+  the same pattern.
+
+5. ACCESSIBILITY
+----------------------------------------------------------------------
+- Removed the red-colored, bold styling applied to the words "Red
+  spikes" at the start of section 5.02, since color was the only cue
+  distinguishing that text—readers who can't perceive color would miss
+  the emphasis entirely. The text is now plain, matching the rest of
+  the paragraph.
+- Removed bold formatting from "blue square" in the player description,
+  which added emphasis without adding meaning.
+- Removed the decorative full-width red banner graphic that appeared
+  across the top of section-opening pages in the casual guide (for
+  example, above "5. Gameplay"). It carried no information and added
+  visual clutter; the compliant version presents the same heading
+  directly on a plain background.
+- Rewrote image captions as complete descriptive phrases instead of
+  Title Case fragments—for example, "Bottom Gravity — White Theme
+  (player mid-jump over red spikes)" became "Bottom gravity, white
+  theme: the player mid-jump over red spikes"—so a screen reader (or a
+  reader who can't see the image) gets the same information from the
+  caption text alone.
+- Replaced several symbol-heavy instructions (arrows, slashes) with
+  plain words throughout, which is friendlier to screen readers that
+  may not announce symbols consistently (see Special Characters,
+  below).
+- Made every Table of Contents entry a working link to its section,
+  supporting readers who navigate with a keyboard or screen reader
+  instead of scrolling.
+
+6. DOCUMENT/PAGE FORMATTING
+----------------------------------------------------------------------
+- Heading styles are configured so a heading always stays with the
+  paragraph that follows it. In the casual guide's layout, a heading
+  could land at the bottom of a page with its explanation starting on
+  the next page; the compliant version prevents that pairing from ever
+  splitting.
+- Every image and its caption are grouped as a single unit that can't
+  be separated by a page break. This directly fixes a real problem
+  found while building the compliant version: an earlier draft let a
+  caption ("Bottom gravity." / "Top gravity.") land on the page after
+  its image—the final version keeps every figure and caption on the
+  same page.
+- Moved "5.07 High Score" to begin at the top of a fresh page instead
+  of continuing partway down the page after "5.06 Gravity System" ends,
+  giving the scoring rules and the Restart subsection their own visual
+  space instead of blending into the previous section.
+- Promoted "Final Quick Start" out of the bottom of the Troubleshooting
+  page and gave it a full page of its own as section "9. Final Quick
+  Start," instead of it visually competing for space with the last
+  Troubleshooting answer.
+- Standardized bullet and numbered list indentation so both marker
+  types line up at the same horizontal position, instead of the
+  bullets sitting noticeably further left than the numbers.
+- Body paragraphs are now fully justified (even left and right
+  margins). Note: Microsoft's own accessibility guidance doesn't
+  explicitly require justified text, and some accessibility
+  authorities (for readers with dyslexia, for example) actually prefer
+  left-aligned, ragged-right text because justification can create
+  uneven word spacing. This is worth a second look if accessibility for
+  low-vision or dyslexic readers is a priority for this document.
+- Numbered list items now consistently end with a period after the
+  number and after the sentence (for example, "1. Gravity immediately
+  reverses."), where the casual guide left both off ("1 Gravity
+  immediately reverses").
+
+7. STRUCTURE AND ORGANIZATION
+----------------------------------------------------------------------
+- Added a Table of Contents entry for "9. Final Quick Start," which
+  existed in the casual guide but wasn't listed in its Table of
+  Contents at all.
+- Renamed subheading "Game Over Score" to "High Score" so it matches
+  its parent heading "5.07 High Score" and doesn't introduce a second,
+  slightly different name for the same idea.
+- Made the Table of Contents a functional navigation aid (hyperlinked
+  entries) rather than plain, non-interactive text—directly supporting
+  the guide's recommendation to provide navigation in long documents.
+
+8. VOICE AND TONE
+----------------------------------------------------------------------
+- Changed "Selecting Change Theme returns to the theme selector." to
+  "Selecting Change Theme returns you to the theme selector."—speaking
+  directly to the reader instead of describing the action impersonally.
+- Changed "Survive longer, react faster, and score higher!" to "Survive
+  longer, react faster, and score higher." (removed the exclamation
+  mark for an even, professional tone consistent with the rest of the
+  guide).
+- Changed "Game Over occurs when the player has no remaining Strength
+  and receives another damaging red-spike collision." to "...takes
+  another damaging red-spike hit."—a slightly warmer, more natural verb
+  choice ("takes a hit") instead of the stiffer "receives...collision."
+
+9. ACTIVE VOICE
+----------------------------------------------------------------------
+- Changed "Red spikes are intentionally separated from one another.
+  They should not spawn directly on top of or physically merge with
+  another spike." to "The game intentionally separates red spikes from
+  one another. Spikes never spawn directly on top of, or merged with,
+  another spike."
+- Changed "Yellow Gravity Feed is prevented from immediately appearing
+  again" to "The game holds off showing another Yellow Gravity Feed
+  right away."
+- Changed "this prevents the gravity transition from becoming unfair"
+  to "this keeps the gravity transition fair" (active voice, stated as
+  a positive outcome instead of a negative one avoided).
+- Changed "providing immediate visual feedback that the pickup was
+  successfully collected" to "giving immediate visual feedback that you
+  collected the pickup."
+- Changed "whether a new high score was achieved" to "whether you
+  reached a new high score."
+- Changed "Themes can also be selected using the mouse or touchscreen."
+  to "You can also select themes using the mouse or touchscreen." (the
+  casual guide's sentence makes "Themes" the passive subject; the
+  compliant version makes the reader the active subject).
+
+10. INSTRUCTIONS AND PROCEDURES
+----------------------------------------------------------------------
+- Added consistent end punctuation to every numbered Getting Started
+  step (the casual guide's steps had none).
+- Changed "It will normally open automatically" to "It normally opens
+  automatically" (simpler present tense instead of future tense for a
+  fact that's true every time).
+- Kept every procedure at or under 7 steps, in line with the guidance
+  that procedures exceeding roughly 12 steps should be reconsidered—no
+  change needed here, just confirmed compliant.
+
+11. UI AND BUTTON TEXT
+----------------------------------------------------------------------
+- Changed the quoted button label "Open with," (with a comma tucked
+  inside the closing quotation mark) to a plain, unquoted reference:
+  "choose Open with." This matches how every other UI label in the
+  document (File, Open File, Save, Restart) is written—without
+  quotation marks—so UI names are referenced consistently throughout.
+- Changed "right-click → Open with → choose your browser" to
+  "right-click and select Open with to choose your browser," turning a
+  symbol-linked chain into a plain instructional sentence.
+
+12. ERROR MESSAGES
+----------------------------------------------------------------------
+- Not applicable. Spike Runner's guide doesn't document in-game error
+  messages, so this category has no differences to report.
+
+13. GRAMMAR AND SENTENCE CONSTRUCTION
+----------------------------------------------------------------------
+- Added contractions throughout, matching Microsoft's explicit
+  preference for them: "is not" to "isn't," "does not" to "doesn't,"
+  "will" to (removed, present tense used instead), "cannot" to "can't,"
+  "do not" to "don't," "you are" to "you're," "you will" to "you'll."
+  This appears in the About This Guide page, the Objective section, the
+  Getting Started steps, the Pause Mode section, the Strategy Tips
+  section, and the Troubleshooting section.
+- Changed "N increases the gameplay speed temporarily" to "Pressing N
+  increases gameplay speed temporarily," giving the sentence a clear,
+  concrete subject ("Pressing N") instead of treating a single letter
+  as the grammatical subject of the sentence.
+
+14. WORD CHOICE
+----------------------------------------------------------------------
+- Changed "the gameplay HUD" to "the Gameplay screen," replacing an
+  unexplained acronym with a plain description any reader can picture.
+- Changed "rather than instantaneous teleportation" to "rather than an
+  instant teleport," a shorter, more common word.
+- Changed "does not allow Strength to grow indefinitely" to "doesn't
+  let strength grow indefinitely" ("let" instead of "allow" is the
+  simpler, more direct verb).
+
+15. CAPITALIZATION
+----------------------------------------------------------------------
+- Standardized every heading and subheading to a single, consistent
+  Title Case pattern (the casual guide mixed styles—for example
+  "3.01 Starting Spike Runner game" and "3.02 After Starting the game"
+  both left the final word lowercase, while other headings like
+  "5.01 The Player" used full Title Case).
+- Changed ALL CAPS text to normal capitalization: "SPIKE RUNNER Title
+  screen" to "Spike Runner title screen," "GAME OVER" to "Game Over,"
+  and the unquoted "PAUSED" to the properly quoted UI string "Paused."
+- Changed "Normal Speed" to "normal speed" and "Left Arrow"/"Right
+  Arrow" to "Left arrow"/"Right arrow" in body text and tables, since
+  these are ordinary descriptive words, not official product names.
+
+16. PUNCTUATION
+----------------------------------------------------------------------
+- Removed em dash spacing throughout: "player — you must jump over
+  them" to "player—you must jump over them," "vary — some spikes" to
+  "vary—some spikes," "decreases — providing" to "decreases—adding,"
+  and similarly in the Manual Slowdown and Manual Speed Boost
+  subheadings.
+- Replaced slash-separated word pairs with "or": "Pause / Resume" to
+  "Pause or resume," "Confirm / Continue" to "Confirm or continue,"
+  "Space / Tap / Click" to "Space, tap, or click," "Enter / Space" to
+  "Enter or Space," "Left / Right" to "Left or right arrow," "Action /
+  Result" to "Action or Result," and "Windows/Linux" to "Windows or
+  Linux."
+- Replaced arrow symbols used as connectors with words or colons
+  throughout, including in the Getting Started steps ("File → Open
+  File" to "File > Open File"), the OS Quick Tip table, the Final Quick
+  Start list ("Space / Tap → Jump" to "Space or tap: jump."), and the
+  back cover ("Jump → Avoid → Collect → Shift → Survive" to "Jump,
+  avoid, collect, shift, and survive.").
+- Changed the quoted symbol reference "black '+' symbol" to the spelled
+  -out "black plus symbol."
+- Changed the sentence fragment "If the player has zero Strength and
+  collides with another red spike: GAME OVER." (colon plus all-caps
+  fragment) to a complete sentence: "...the game ends (Game Over)."
+
+17. TABLES AND LISTS
+----------------------------------------------------------------------
+- Kept the same three tables (Getting Started's OS/Quick Tip table, the
+  Controls table, and the Quick Reference table) but corrected their
+  header and cell casing to sentence case throughout (see
+  Capitalization).
+- Made list item grammar parallel throughout by consistently starting
+  Getting Started steps and Final Quick Start items with an action or a
+  clear label, and by giving every bulleted and numbered list item
+  matching end punctuation.
+
+18. LINKS
+----------------------------------------------------------------------
+- Added real, descriptive hyperlinks from every Table of Contents entry
+  to its matching section (the casual guide's Table of Contents is
+  plain text with no links). Each link's visible text is the section
+  name itself (for example, "5.03 Yellow Gravity Feed"), so it makes
+  sense on its own without surrounding context—there are no "click
+  here" style links anywhere in either document.
+
+19. LOCALIZATION AND INTERNATIONAL AUDIENCES
+----------------------------------------------------------------------
+- Removing arrow symbols and slashes (see Punctuation) also helps
+  localization: symbol-based shorthand like "→" and "/" can be
+  ambiguous once translated, while spelled-out connectors like "or"
+  and "then" translate predictably.
+- No idioms, culturally specific references, or slang were found in
+  either version; both use plain, literal language throughout.
+- Dates aren't used in either version, so date-ambiguity isn't a
+  concern here.
+
+20. BIAS-FREE AND INCLUSIVE LANGUAGE
+----------------------------------------------------------------------
+- Both versions already use gender-neutral language throughout ("the
+  player," "you"). No changes were needed in either document under
+  this category.
+
+21. SPECIAL CHARACTERS AND SYMBOLS
+----------------------------------------------------------------------
+- Spelled out the plus symbol in prose ("black '+' symbol" to "black
+  plus symbol") while keeping "+1" and "-1" as numeric stat notation in
+  tables, where a symbol is the clearest way to show a number change.
+- Removed arrow characters (→) used as connectors in running text and
+  lists, replacing them with words, since screen readers can render
+  arrow glyphs inconsistently or skip them.
+- Removed forward slashes used as a substitute for "or," which some
+  screen readers read aloud as "slash," interrupting the sentence.
+
+22. IMAGES, GRAPHICS, AND MEDIA
+----------------------------------------------------------------------
+- Removed the decorative full-width red banner that appeared above
+  section-opening headings in the casual guide, since it carried no
+  information (see Accessibility, above).
+- Removed the duplicate "Damaged player (0 Strength)" image, which
+  repeated the third icon in the Strength Collision row directly above
+  it.
+- Rewrote every image caption as a complete, descriptive sentence
+  fragment instead of a Title Case label, so the caption alone conveys
+  the same information as the image.
+- Replaced several UI-element screenshots (spike direction, Yellow
+  Gravity Feed, Green Strength Fuel, the Strength icons, the gravity
+  diagrams) with simplified, consistently styled icon graphics, while
+  keeping the two full gameplay screenshots for real-world context.
+- Reduced the size of the Green Strength Fuel icon so it reads as a
+  small supporting graphic rather than a large, attention-grabbing
+  image out of proportion to its role in the text.
+
+23. SCREEN-READER-FRIENDLY STRUCTURE
+----------------------------------------------------------------------
+- Built every bulleted and numbered list as a real list structure
+  (with a hanging indent and a genuine list marker), rather than typed
+  bullet characters sitting in a plain paragraph, so list structure is
+  available to assistive technology, not just implied visually.
+- Used real heading styles at consistent levels throughout (H1 for
+  numbered top-level sections, H2 for x.xx subsections, H3 for named
+  sub-topics), instead of relying on bold, colored, or larger text to
+  simulate a heading.
+- Gave the Table of Contents real navigational links instead of plain
+  text that only works visually.
+
+24. SCANNABILITY
+----------------------------------------------------------------------
+- Kept paragraphs short throughout both versions (roughly 2-4 lines),
+  so no changes were needed under this category beyond the sentence-
+  level rewrites already listed above.
+- Added an introductory paragraph to section 4 ("Spike Runner is fully
+  playable with the keyboard...") so a scanning reader immediately
+  understands the purpose of the Controls table before reaching it.
+
+25. CAPITALIZATION (sentence case for headings/labels; capitalize only
+   proper nouns and official in-game object names)
+----------------------------------------------------------------------
+- Changed "JUMP → AVOID → COLLECT → SHIFT → SURVIVE" to "Jump, avoid,
+  collect, shift, and survive."
+- Changed "SPIKE RUNNER Title screen" to "Spike Runner title screen"
+- Changed "3.01 Starting Spike Runner game" to "3.01 Starting the Spike
+  Runner Game"
+- Changed "3.02 After Starting the game" to "3.02 After Starting the Game"
+- Changed "Left Arrow" / "Right Arrow" (table entries and body text) to
+  "Left arrow" / "Right arrow"
+- Changed "Pause / Resume" and "Confirm / Continue" to "Pause or resume"
+  and "Confirm or continue" (sentence case, not Title Case, for action
+  descriptions)
+- Changed "At Theme selection" to consistent "Theme Selection" (matched
+  capitalization to the earlier reference to the same screen name)
+- Changed "Normal Speed" to "normal speed" (not a proper UI term)
+- Changed "Strength" to "strength" everywhere it appears alone, mid-
+  sentence, and isn't paired with "Fuel" (e.g., "Maintain your Strength"
+  to "Maintain your strength"; "-1 Strength" to "-1 strength"; "Zero
+  Strength" row value "White X appears" kept as a table label but body
+  references lowercased)
+- Changed "Green Strength fuel" (inconsistent internal capitalization) to
+  "Green Strength Fuel" (the official two-word in-game term is now
+  capitalized consistently everywhere it's used as a proper noun)
+- Changed "Red Spike", "Red Spike Collision", "Yellow Square", "Green
+  Circle" (Title Case in Quick Reference table) to "Red spike", "Red
+  spike collision", "Yellow square", "Green circle" (sentence case,
+  since these are generic feature descriptions, not proper names)
+- Changed ALL CAPS "PAUSED" (unquoted) to a properly quoted UI string:
+  "Paused."
+- Changed "Black Theme (default)" to "Black Theme (Default)" for
+  consistent Title Case parenthetical
+- Changed "6.1 Watch the Spike Height" to "6.1 Watch Spike Height"
+  (removed the unnecessary article for a cleaner, consistent heading)
+
+26. PUNCTUATION (no arrows/slashes as connectors; em dash spacing; list
+   punctuation)
+----------------------------------------------------------------------
+- Changed arrow symbols used as connectors, e.g. "File → Open File" to
+  "File > Open File", and "right-click → Open with → choose your
+  browser" to "right-click and select Open with to choose your browser"
+- Changed "1. Space / Tap → Jump" to "1. Space or tap: jump."
+- Changed "3. Yellow square → Gravity changes" to "3. Yellow square:
+  gravity changes."
+- Changed "4. Green circle → +1 Strength" to "4. Green circle: +1
+  strength."
+- Changed "5. P → Pause" to "5. P: Pause."
+- Changed "Jump → Avoid → Collect → Shift → Survive" (back cover) to
+  "Jump, avoid, collect, shift, and survive."
+- Changed "Space / Tap / Click" to "Space, tap, or click"
+- Changed "Enter / Space after Game Over" to "Enter or Space after Game
+  Over"
+- Changed "Left / Right" to "Left or right arrow"
+- Changed "Feature | Action / Result" table header to "Feature | Action
+  or Result"
+- Changed em dashes with surrounding spaces (e.g., "player — you must
+  jump over them", "vary — some spikes are short", "decreases —
+  providing increasing difficulty") to unspaced em dashes ("player—you
+  must jump over them", "vary—some spikes are short",
+  "decreases—adding difficulty")
+- Changed bullet list items with no closing punctuation (e.g., "Normally
+  the square travels along the current gravity surface") to complete
+  sentences with periods ("Normally, the square travels along the
+  current gravity surface.")
+- Changed numbered list items with no period after the digit ("1 Gravity
+  immediately reverses") to standard list punctuation ("1. Gravity
+  immediately reverses.")
+- Changed "black "+" symbol" (quoted symbol character) to "black plus
+  symbol" (symbol spelled out in words instead of shown as a quoted
+  character)
+- Changed "If the player has zero Strength and collides with another red
+  spike: GAME OVER." (sentence fragment with colon and all-caps) to a
+  complete sentence: "If the player has zero strength and collides with
+  another red spike, the game ends (Game Over)."
+
+27. GRAMMAR AND CONTRACTIONS (warmer, conversational Microsoft voice)
+----------------------------------------------------------------------
+- Changed "This material is not for commercial distribution" to "This
+  material isn't for commercial distribution"
+- Changed "The game does not have a traditional finish line" to "The
+  game doesn't have a traditional finish line"
+- Changed "It will normally open automatically" to "It normally opens
+  automatically" (simplified verb tense)
+- Changed "If it does not open automatically" to "If it doesn't open
+  automatically"
+- Changed "You will see the Spike Runner title screen" to "You'll see
+  the Spike Runner title screen"
+- Changed "You will then reach the Theme Selection screen" to "You'll
+  then reach the Theme Selection screen"
+- Changed "does not allow Strength to grow indefinitely" to "doesn't let
+  strength grow indefinitely"
+- Changed "Restarting does not simply reload the HTML page" to
+  "Restarting doesn't simply reload the HTML page"
+- Changed "Input cannot accidentally trigger jumps" to "Input can't
+  accidentally trigger jumps."
+- Changed "Do not wait until the spike is directly beside the square" to
+  "Don't wait until the spike is directly beside the square"
+- Changed heading "Do Not Panic During Gravity Changes" to "Don't Panic
+  During Gravity Changes"
+- Changed "do not take an unnecessary risk" to "don't take an
+  unnecessary risk"
+- Changed "when you are comfortable with the current obstacle pattern"
+  to "when you're comfortable with the current obstacle pattern"
+- Changed "The game does not respond to keyboard input" to "The game
+  doesn't respond to keyboard input."
+- Changed "The theme does not change" to "The theme doesn't change."
+
+28. ACTIVE VOICE (replace passive constructions with an active subject)
+----------------------------------------------------------------------
+- Changed "Red spikes are intentionally separated from one another. They
+  should not spawn directly on top of or physically merge with another
+  spike." to "The game intentionally separates red spikes from one
+  another. Spikes never spawn directly on top of, or merged with,
+  another spike."
+- Changed "Yellow Gravity Feed is prevented from immediately appearing
+  again" to "The game holds off showing another Yellow Gravity Feed
+  right away."
+- Changed "this prevents the gravity transition from becoming unfair" to
+  "this keeps the gravity transition fair" (active and stated
+  positively instead of negatively)
+- Changed "The collided spike is destroyed." to an active, more useful
+  statement of consequence: "If square's strength is 0, then one red
+  spike collision will result in Game Over."
+- Changed "providing immediate visual feedback that the pickup was
+  successfully collected" to "giving immediate visual feedback that you
+  collected the pickup" (active voice, addresses the reader directly)
+- Changed "whether a new high score was achieved" to "whether you
+  reached a new high score"
+
+29. CONCISENESS (remove redundant sentences, words, and duplicate images)
+----------------------------------------------------------------------
+- Combined the three separate sentences under "1. Introduction" into a
+  single paragraph
+- Removed the redundant step "You can also drag and drop the Spike
+  Runner.html file directly into an open browser window" from the
+  Getting Started steps
+- Removed the redundant sentence "You can use mouse click or Enter to
+  proceed further" (already covered by the surrounding instructions)
+- Shortened "The green object is a medium-sized green circle with a
+  black "+" symbol. It is intentionally larger than a tiny pickup but
+  remains small enough to be a jumpable gameplay object. It is not a
+  spike." to a single sentence: "The green object is a medium-sized
+  green circle with a black plus symbol."
+- Changed "Every red spike collision removes exactly 1 Strength:" to
+  "Every red spike collision removes 1 strength." (removed the
+  unnecessary qualifier "exactly")
+- Removed the duplicate "Damaged player (0 Strength)" image, since the
+  same visual is already shown in the Strength Collision icon row
+  directly above it
+- Changed "reaction time decreases — providing increasing difficulty
+  without traditional stages" to "reaction time decreases—adding
+  difficulty without traditional stages"
+- Shortened heading "5.07 Scoring and High Score" to "5.07 High Score"
+
+30. SIMPLER SENTENCES (plain language; avoid unexplained jargon/acronyms)
+----------------------------------------------------------------------
+- Changed "the gameplay HUD" to "the Gameplay screen" (avoids the
+  undefined acronym "HUD" for readers unfamiliar with game jargon)
+- Changed "rather than instantaneous teleportation" to "rather than an
+  instant teleport" (simpler, more common phrasing)
+- Changed "N increases the gameplay speed temporarily" to "Pressing N
+  increases gameplay speed temporarily" (clarifies that a key press,
+  not the letter N itself, causes the effect)
+
+31. CLARITY AND HELPFULNESS (added or clarified information)
+----------------------------------------------------------------------
+- Added an introductory paragraph before the Controls table: "Spike
+  Runner is fully playable with the keyboard. The game responds to a
+  small set of keys, so you can keep your eyes on the arena instead of
+  the keyboard. Use the keys below during gameplay and at the title,
+  theme, and Game Over screens."
+- Added a clarifying sentence to the High Score section: "High Score is
+  retained per browser session."
+- Changed vague heading "What Happens When You Collect It?" to the more
+  specific "When You Collect Yellow Gravity Feed:" (removes the
+  ambiguous pronoun "It")
+- Changed "Strength 0 (X appears)" caption to "Strength = 0" (clearer
+  use of a math symbol instead of a parenthetical aside)
+- Changed "White X appears" (Quick Reference table) to "White X appears
+  on square" (clarifies where the X appears)
+- Changed "On the theme selection screen: Left Arrow selects Black,
+  Right Arrow selects White, Enter confirms." to a parallel, instructive
+  sentence: "On the theme selection screen, press the left arrow to
+  select Black, the right arrow to select White, and Enter to confirm."
+
+32. STRUCTURE AND NAVIGATION (headings, table of contents, page flow)
+----------------------------------------------------------------------
+- Promoted "Final Quick Start" from an untitled block at the bottom of
+  the Troubleshooting page to a full top-level section, "9. Final Quick
+  Start," with its own heading and Table of Contents entry
+- Added a Table of Contents entry for the new "9. Final Quick Start"
+  section (missing from the Casual Guide's TOC)
+- Renamed subheading "Game Over Score" to "High Score" to match its
+  parent section name and avoid confusion
+- Made every Table of Contents entry a working hyperlink to its
+  corresponding section (improves navigation and meets accessibility
+  guidance for long PDFs)
+- Moved section "5.07 High Score" to start on a fresh page instead of
+  continuing mid-page after the previous section
+
+33. EASIER ACCESSIBILITY (color, images, and formatting)
+----------------------------------------------------------------------
+- Removed the red-colored, bold styling on the words "Red spikes" at the
+  start of section 5.02 body text, since conveying emphasis through
+  color alone is not accessible to readers who can't perceive color
+  differences; the text now reads as plain, unstyled text
+- Removed bold formatting from "blue square" in the player description,
+  reducing unnecessary emphasis that doesn't aid comprehension
+- Rewrote image captions as full descriptive phrases (e.g., "Bottom
+  gravity, white theme: the player mid-jump over red spikes" instead of
+  "Bottom Gravity — White Theme (player mid-jump over red spikes)") so
+  the caption text itself conveys the same information a screen-reader
+  user would need, independent of the image
+- Replaced several individual UI-element screenshots (spike direction,
+  Yellow Gravity Feed, Green Strength Fuel, strength icons, gravity
+  diagrams) with simplified, consistently styled icon graphics, while
+  keeping the two full gameplay screenshots for context
+- Reduced the size of the Green Strength Fuel icon so its visual weight
+  matches its role as a small supporting graphic rather than a
+  full-width image
+
+34. TONE (professional, less exclamatory)
+----------------------------------------------------------------------
+- Changed "Survive longer, react faster, and score higher!" to "Survive
+  longer, react faster, and score higher." (removed the exclamation
+  mark for a more even, professional tone consistent with the rest of
+  the guide)
+
+
+35. FINAL QUALITY CHECK / REMAINING OPPORTUNITIES
+----------------------------------------------------------------------
+A few items are worth a second pass, since they don't fully match the
+guidance even in the compliant version:
+- The Troubleshooting Q&A "Q: Mobile tapping does not jump / A: Tap
+  directly on the game canvas..." from the casual guide is missing
+  from the compliant version entirely. This is dropped because the game
+  is designed for desktop even though it can run on mobile provided that
+  additional physical keyboard / workarounds is required to play game
+  with full features. It's an intentional edit—worth deletion for lack of
+  complete information as well as accuracy. 
+- The section 5.03 introduction ("The yellow square appears in the
+  game is advantageous for player. If blue square touches yellow
+  square, it gives a short relief from red spikes...") has a
+  grammatical issue (a run-on construction and a missing article
+  before "player") that doesn't meet the Clarity and Grammar guidance
+  applied everywhere else in the document. Consider revising to
+  something like: "The yellow square is an advantage for the player.
+  When the blue square touches it, you get a short relief from red
+  spikes, and gravity changes direction."
+- That same paragraph ends with an exclamation mark ("...fun to play!"),
+  which is inconsistent with the rest of the document, where
+  exclamation marks were specifically removed (for example, on the
+  back cover) to keep an even, professional tone.
+- As noted under Document/page formatting, fully justified paragraph
+  text is a stylistic choice rather than an explicit Microsoft
+  requirement, and may be worth reconsidering if the primary
+  accessibility audience includes readers with dyslexia or low vision.
+
+
+======================================================================
+Organized using AI 
