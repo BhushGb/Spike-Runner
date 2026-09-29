@@ -2,6 +2,16 @@
 
 A fast-paced browser survival game. Jump over red spikes, collect green fuel, and invert gravity with yellow feeds. How long can you survive?
 
+| Quick Start Guide is created to introduce game mechanics and rules for player. |
+
+
+## Files
+
+| File                                 | Description                        |
+|--------------------------------------|------------------------------------|
+| `Spike Runner.html`                  | The game (open in any browser)     |
+| `Spike_Runner_Quick_Start_Guide.pdf` | Printable quick-start pamphlet     |
+
 
 
 ## How to Play
